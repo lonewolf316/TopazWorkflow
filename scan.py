@@ -1,3 +1,5 @@
+# Scans Directory for sequentially numbered files to ensure one large sequence exists
+
 import os
 
 def sortContinuous(L):

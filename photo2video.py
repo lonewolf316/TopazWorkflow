@@ -1,3 +1,5 @@
+# Combines image sequence into uncompressed avi file for encoding
+
 import os
 from re import template
 import cv2
