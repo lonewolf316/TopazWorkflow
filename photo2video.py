@@ -14,8 +14,15 @@ frameSize = (3840, 2160)
 q = Queue(maxsize=0) # Filename queue going into worker
 r = Queue(maxsize=0) # Images returning from worker
 
+readDir = input("Source Directory (Defaults to data):")
+writeDir = input("Output Dir/Filename (Defaults to Desktop/output.avi")
+if readDir == "":
+    readDir = "data"
+if writeDir == "":
+    writeDir = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop', "output.avi")
+
 print("Finding Files")
-allFiles = [f for f in os.listdir("data") if os.path.isfile(os.path.join("data", f))]
+allFiles = [f for f in os.listdir(readDir) if os.path.isfile(os.path.join(readDir, f))]
 lastFrame = len(allFiles)-1
 
 for file in allFiles:
@@ -36,7 +43,7 @@ def importWorker(q, r):
 def exportWorker(r, total):
     currentNum=0
     disorderFrames = []
-    out = cv2.VideoWriter('output_video.avi',cv2.VideoWriter_fourcc(*'DIVX'), 60, frameSize)
+    out = cv2.VideoWriter(writeDir, cv2.VideoWriter_fourcc(*'DIVX'), 60, frameSize)
     with tqdm(total=lastFrame+1) as progress:
         while currentNum <= total:
             frame = r.get()
