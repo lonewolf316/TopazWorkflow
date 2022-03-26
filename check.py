@@ -18,6 +18,7 @@ def fileCheckWorker(q, r, d):
         filePath = q.get()
         try:
             testImage = Image.open(filePath)
+            testImage.verify()
             testImage.close()
         except:
             r.put(filePath)
